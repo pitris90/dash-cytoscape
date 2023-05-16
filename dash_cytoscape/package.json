@@ -1,6 +1,6 @@
 {
   "name": "dash-cytoscape",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "A Component Library for Dash aimed at facilitating network visualization in Python, wrapped around Cytoscape.js",
   "repository": {
     "type": "git",
@@ -29,9 +29,11 @@
   "author-email": "cytoscape@plotly.com",
   "license": "MIT",
   "dependencies": {
+    "cytoscape": "^3.23.0",
     "cytoscape-cola": "^2.3.0",
     "cytoscape-cose-bilkent": "^4.0.0",
     "cytoscape-dagre": "^2.2.2",
+    "cytoscape-edgehandles": "^4.0.1",
     "cytoscape-euler": "^1.2.1",
     "cytoscape-fcose": "^2.1.0",
     "cytoscape-klay": "^3.1.2",
@@ -39,9 +41,9 @@
     "cytoscape-svg": "0.2.0",
     "lodash": "^4.17.11",
     "ramda": "^0.25.0",
-    "react": "^16.14.0",
+    "react": ">=0.14",
     "react-cytoscapejs": "1.2.1",
-    "react-dom": "^16.14.0"
+    "react-dom": ">=0.14"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

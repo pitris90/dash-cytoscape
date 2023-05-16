@@ -1,6 +1,6 @@
 {
   "src/lib/components/Cytoscape.react.js": {
-    "description": "A Component Library for Dash aimed at facilitating network visualization in\nPython, wrapped around [Cytoscape.js](http://js.cytoscape.org/).",
+    "description": "A Component Library for Dash aimed at facilitating network visualization in\r\nPython, wrapped around [Cytoscape.js](http://js.cytoscape.org/).",
     "displayName": "Cytoscape",
     "methods": [
       {
@@ -93,7 +93,7 @@
           "name": "string"
         },
         "required": false,
-        "description": "Sets the class name of the element (the value of an element's html\nclass attribute)."
+        "description": "Sets the class name of the element (the value of an element's html\r\nclass attribute)."
       },
       "style": {
         "type": {
@@ -102,7 +102,7 @@
         "required": false,
         "description": "Add inline styles to the root element.",
         "defaultValue": {
-          "value": "{width: '600px', height: '600px'}",
+          "value": "{ width: '600px', height: '600px' }",
           "computed": false
         }
       },
@@ -111,7 +111,7 @@
           "name": "func"
         },
         "required": false,
-        "description": "Dash-assigned callback that should be called whenever any of the\nproperties change."
+        "description": "Dash-assigned callback that should be called whenever any of the\r\nproperties change."
       },
       "elements": {
         "type": {
@@ -137,7 +137,7 @@
                       },
                       "label": {
                         "name": "string",
-                        "description": "Optional name for the element, useful when `data(label)` is given to a style's `content`\nor `label`. It is only a convention.",
+                        "description": "Optional name for the element, useful when `data(label)` is given to a style's `content`\r\nor `label`. It is only a convention.",
                         "required": false
                       },
                       "parent": {
@@ -198,7 +198,7 @@
                   },
                   "classes": {
                     "name": "string",
-                    "description": "Space separated string of class names of the element. Those classes can be selected\nby a style selector.",
+                    "description": "Space separated string of class names of the element. Those classes can be selected\r\nby a style selector.",
                     "required": false
                   }
                 }
@@ -220,7 +220,7 @@
           ]
         },
         "required": false,
-        "description": "A list of dictionaries representing the elements of the networks. Each dictionary describes an element, and\nspecifies its purpose. The [official Cytoscape.js documentation](https://js.cytoscape.org/#notation/elements-json)\noffers an extensive overview and examples of element declaration.\nAlternatively, a dictionary with the format { 'nodes': [], 'edges': [] } is allowed at initialization,\nbut arrays remain the recommended format.",
+        "description": "A list of dictionaries representing the elements of the networks. Each dictionary describes an element, and\r\nspecifies its purpose. The [official Cytoscape.js documentation](https://js.cytoscape.org/#notation/elements-json)\r\noffers an extensive overview and examples of element declaration.\r\nAlternatively, a dictionary with the format { 'nodes': [], 'edges': [] } is allowed at initialization,\r\nbut arrays remain the recommended format.",
         "defaultValue": {
           "value": "[]",
           "computed": false
@@ -234,19 +234,19 @@
             "value": {
               "selector": {
                 "name": "string",
-                "description": "Which elements you are styling. Generally, you select a group of elements (node, edges, both),\na class (that you declare in the element dictionary), or an element by ID.",
+                "description": "Which elements you are styling. Generally, you select a group of elements (node, edges, both),\r\na class (that you declare in the element dictionary), or an element by ID.",
                 "required": true
               },
               "style": {
                 "name": "object",
-                "description": "What aspects of the elements you want to modify. This could be the size or\ncolor of a node, the shape of an edge arrow, or many more.",
+                "description": "What aspects of the elements you want to modify. This could be the size or\r\ncolor of a node, the shape of an edge arrow, or many more.",
                 "required": true
               }
             }
           }
         },
         "required": false,
-        "description": "A list of dictionaries representing the styles of the elements.\nEach dictionary requires the following keys: `selector` and `style`.\n\nBoth the [selector](https://js.cytoscape.org/#selectors) and\nthe [style](https://js.cytoscape.org/#style/node-body) are\nexhaustively documented in the Cytoscape.js docs. Although methods such\nas `cy.elements(...)` and `cy.filter(...)` are not available, the selector\nstring syntax stays the same."
+        "description": "A list of dictionaries representing the styles of the elements.\r\nEach dictionary requires the following keys: `selector` and `style`.\r\n\r\nBoth the [selector](https://js.cytoscape.org/#selectors) and\r\nthe [style](https://js.cytoscape.org/#style/node-body) are\r\nexhaustively documented in the Cytoscape.js docs. Although methods such\r\nas `cy.elements(...)` and `cy.filter(...)` are not available, the selector\r\nstring syntax stays the same."
       },
       "layout": {
         "type": {
@@ -312,7 +312,7 @@
                   "computed": false
                 }
               ],
-              "description": "The layouts available by default are:\n  `random`: Randomly assigns positions.\n  `preset`: Assigns position based on the `position` key in element dictionaries.\n  `circle`: Single-level circle, with optional radius.\n  `concentric`: Multi-level circle, with optional radius.\n  `grid`: Square grid, optionally with numbers of `rows` and `cols`.\n  `breadthfirst`: Tree structure built using BFS, with optional `roots`.\n  `cose`: Force-directed physics simulation.\n\nSome external layouts are also included. To use them, run\n  `dash_cytoscape.load_extra_layouts()` before creating your Dash app. Be careful about\n  using the extra layouts when not necessary, since they require supplementary bandwidth\n  for loading, which impacts the startup time of the app.\n  The external layouts are:\n  [cose-bilkent](https://github.com/cytoscape/cytoscape.js-cose-bilkent),\n  [fcose](https://github.com/iVis-at-Bilkent/cytoscape.js-fcose),\n  [cola](https://github.com/cytoscape/cytoscape.js-cola),\n  [euler](https://github.com/cytoscape/cytoscape.js-dagre),\n  [spread](https://github.com/cytoscape/cytoscape.js-spread),\n  [dagre](https://github.com/cytoscape/cytoscape.js-dagre),\n  [klay](https://github.com/cytoscape/cytoscape.js-klay),",
+              "description": "The layouts available by default are:\r\n  `random`: Randomly assigns positions.\r\n  `preset`: Assigns position based on the `position` key in element dictionaries.\r\n  `circle`: Single-level circle, with optional radius.\r\n  `concentric`: Multi-level circle, with optional radius.\r\n  `grid`: Square grid, optionally with numbers of `rows` and `cols`.\r\n  `breadthfirst`: Tree structure built using BFS, with optional `roots`.\r\n  `cose`: Force-directed physics simulation.\r\n\r\nSome external layouts are also included. To use them, run\r\n  `dash_cytoscape.load_extra_layouts()` before creating your Dash app. Be careful about\r\n  using the extra layouts when not necessary, since they require supplementary bandwidth\r\n  for loading, which impacts the startup time of the app.\r\n  The external layouts are:\r\n  [cose-bilkent](https://github.com/cytoscape/cytoscape.js-cose-bilkent),\r\n  [fcose](https://github.com/iVis-at-Bilkent/cytoscape.js-fcose),\r\n  [cola](https://github.com/cytoscape/cytoscape.js-cola),\r\n  [euler](https://github.com/cytoscape/cytoscape.js-dagre),\r\n  [spread](https://github.com/cytoscape/cytoscape.js-spread),\r\n  [dagre](https://github.com/cytoscape/cytoscape.js-dagre),\r\n  [klay](https://github.com/cytoscape/cytoscape.js-klay),",
               "required": true
             },
             "fit": {
@@ -337,15 +337,15 @@
             },
             "boundingBox": {
               "name": "object",
-              "description": "How to constrain the layout in a specific area. Keys accepted are either\n`x1, y1, x2, y2` or `x1, y1, w, h`, all of which receive a pixel value.",
+              "description": "How to constrain the layout in a specific area. Keys accepted are either\r\n`x1, y1, x2, y2` or `x1, y1, w, h`, all of which receive a pixel value.",
               "required": false
             }
           }
         },
         "required": false,
-        "description": "A dictionary specifying how to set the position of the elements in your\ngraph. The `'name'` key is required, and indicates which layout (algorithm) to\nuse. The keys accepted by `layout` vary depending on the algorithm, but these\nkeys are accepted by all layouts: `fit`,  `padding`, `animate`, `animationDuration`,\n`boundingBox`.\n\n The complete list of layouts and their accepted options are available on the\n [Cytoscape.js docs](https://js.cytoscape.org/#layouts) . For the external layouts,\nthe options are listed in the \"API\" section of the  README.\n Note that certain keys are not supported in Dash since the value is a JavaScript\n function or a callback. Please visit this\n[issue](https://github.com/plotly/dash-cytoscape/issues/25) for more information.",
+        "description": "A dictionary specifying how to set the position of the elements in your\r\ngraph. The `'name'` key is required, and indicates which layout (algorithm) to\r\nuse. The keys accepted by `layout` vary depending on the algorithm, but these\r\nkeys are accepted by all layouts: `fit`,  `padding`, `animate`, `animationDuration`,\r\n`boundingBox`.\r\n\r\n The complete list of layouts and their accepted options are available on the\r\n [Cytoscape.js docs](https://js.cytoscape.org/#layouts) . For the external layouts,\r\nthe options are listed in the \"API\" section of the  README.\r\n Note that certain keys are not supported in Dash since the value is a JavaScript\r\n function or a callback. Please visit this\r\n[issue](https://github.com/plotly/dash-cytoscape/issues/25) for more information.",
         "defaultValue": {
-          "value": "{name: 'grid'}",
+          "value": "{ name: 'grid' }",
           "computed": false
         }
       },
@@ -366,9 +366,9 @@
           }
         },
         "required": false,
-        "description": "Dictionary indicating the initial panning position of the graph. The\nfollowing keys are accepted:",
+        "description": "Dictionary indicating the initial panning position of the graph. The\r\nfollowing keys are accepted:",
         "defaultValue": {
-          "value": "{x: 0, y: 0}",
+          "value": "{ x: 0, y: 0 }",
           "computed": false
         }
       },
@@ -377,7 +377,7 @@
           "name": "number"
         },
         "required": false,
-        "description": "The initial zoom level of the graph. You can set `minZoom` and\n`maxZoom` to set restrictions on the zoom level.",
+        "description": "The initial zoom level of the graph. You can set `minZoom` and\r\n`maxZoom` to set restrictions on the zoom level.",
         "defaultValue": {
           "value": "1",
           "computed": false
@@ -388,7 +388,7 @@
           "name": "bool"
         },
         "required": false,
-        "description": "Whether panning the graph is enabled (i.e., the position of the graph is\nmutable overall).",
+        "description": "Whether panning the graph is enabled (i.e., the position of the graph is\r\nmutable overall).",
         "defaultValue": {
           "value": "true",
           "computed": false
@@ -399,7 +399,7 @@
           "name": "bool"
         },
         "required": false,
-        "description": "Whether user events (e.g. dragging the graph background) are allowed to\npan the graph.",
+        "description": "Whether user events (e.g. dragging the graph background) are allowed to\r\npan the graph.",
         "defaultValue": {
           "value": "true",
           "computed": false
@@ -410,7 +410,7 @@
           "name": "number"
         },
         "required": false,
-        "description": "A minimum bound on the zoom level of the graph. The viewport can not be\nscaled smaller than this zoom level.",
+        "description": "A minimum bound on the zoom level of the graph. The viewport can not be\r\nscaled smaller than this zoom level.",
         "defaultValue": {
           "value": "1e-50",
           "computed": false
@@ -421,7 +421,7 @@
           "name": "number"
         },
         "required": false,
-        "description": "A maximum bound on the zoom level of the graph. The viewport can not be\nscaled larger than this zoom level.",
+        "description": "A maximum bound on the zoom level of the graph. The viewport can not be\r\nscaled larger than this zoom level.",
         "defaultValue": {
           "value": "1e50",
           "computed": false
@@ -432,7 +432,7 @@
           "name": "bool"
         },
         "required": false,
-        "description": "Whether zooming the graph is enabled (i.e., the zoom level of the graph\nis mutable overall).",
+        "description": "Whether zooming the graph is enabled (i.e., the zoom level of the graph\r\nis mutable overall).",
         "defaultValue": {
           "value": "true",
           "computed": false
@@ -443,7 +443,7 @@
           "name": "bool"
         },
         "required": false,
-        "description": "Whether user events (e.g. dragging the graph background) are allowed\nto pan the graph.",
+        "description": "Whether user events (e.g. dragging the graph background) are allowed\r\nto pan the graph.",
         "defaultValue": {
           "value": "true",
           "computed": false
@@ -454,7 +454,7 @@
           "name": "bool"
         },
         "required": false,
-        "description": "Whether box selection (i.e. drag a box overlay around, and release it\nto select) is enabled. If enabled, the user must taphold to pan the graph.",
+        "description": "Whether box selection (i.e. drag a box overlay around, and release it\r\nto select) is enabled. If enabled, the user must taphold to pan the graph.",
         "defaultValue": {
           "value": "false",
           "computed": false
@@ -465,7 +465,7 @@
           "name": "bool"
         },
         "required": false,
-        "description": "Whether nodes should be ungrabified (not grabbable by user) by\ndefault (if true, overrides individual node state).",
+        "description": "Whether nodes should be ungrabified (not grabbable by user) by\r\ndefault (if true, overrides individual node state).",
         "defaultValue": {
           "value": "false",
           "computed": false
@@ -476,7 +476,7 @@
           "name": "bool"
         },
         "required": false,
-        "description": "Whether nodes should be locked (not draggable at all) by default\n(if true, overrides individual node state).",
+        "description": "Whether nodes should be locked (not draggable at all) by default\r\n(if true, overrides individual node state).",
         "defaultValue": {
           "value": "false",
           "computed": false
@@ -487,7 +487,7 @@
           "name": "bool"
         },
         "required": false,
-        "description": "Whether nodes should be unselectified (immutable selection state) by\ndefault (if true, overrides individual element state).",
+        "description": "Whether nodes should be unselectified (immutable selection state) by\r\ndefault (if true, overrides individual element state).",
         "defaultValue": {
           "value": "false",
           "computed": false
@@ -766,6 +766,310 @@
         "required": false,
         "description": "The data dictionary of an edge returned when you tap or click it. Read-only."
       },
+      "tapData": {
+        "type": {
+          "name": "object"
+        },
+        "required": false,
+        "description": "The data with position of tap when tapped on background. Read-only."
+      },
+      "dblTapNode": {
+        "type": {
+          "name": "exact",
+          "value": {
+            "edgesData": {
+              "name": "array",
+              "description": "node specific item",
+              "required": false
+            },
+            "renderedPosition": {
+              "name": "object",
+              "description": "node specific item",
+              "required": false
+            },
+            "timeStamp": {
+              "name": "number",
+              "description": "node specific item",
+              "required": false
+            },
+            "classes": {
+              "name": "string",
+              "description": "General item (for all elements)",
+              "required": false
+            },
+            "data": {
+              "name": "object",
+              "description": "General item (for all elements)",
+              "required": false
+            },
+            "grabbable": {
+              "name": "bool",
+              "description": "General item (for all elements)",
+              "required": false
+            },
+            "group": {
+              "name": "string",
+              "description": "General item (for all elements)",
+              "required": false
+            },
+            "locked": {
+              "name": "bool",
+              "description": "General item (for all elements)",
+              "required": false
+            },
+            "position": {
+              "name": "object",
+              "description": "General item (for all elements)",
+              "required": false
+            },
+            "selectable": {
+              "name": "bool",
+              "description": "General item (for all elements)",
+              "required": false
+            },
+            "selected": {
+              "name": "bool",
+              "description": "General item (for all elements)",
+              "required": false
+            },
+            "style": {
+              "name": "object",
+              "description": "General item (for all elements)",
+              "required": false
+            },
+            "ancestorsData": {
+              "name": "union",
+              "value": [
+                {
+                  "name": "object"
+                },
+                {
+                  "name": "array"
+                }
+              ],
+              "description": "Item for compound nodes",
+              "required": false
+            },
+            "childrenData": {
+              "name": "union",
+              "value": [
+                {
+                  "name": "object"
+                },
+                {
+                  "name": "array"
+                }
+              ],
+              "description": "Item for compound nodes",
+              "required": false
+            },
+            "descendantsData": {
+              "name": "union",
+              "value": [
+                {
+                  "name": "object"
+                },
+                {
+                  "name": "array"
+                }
+              ],
+              "description": "Item for compound nodes",
+              "required": false
+            },
+            "parentData": {
+              "name": "union",
+              "value": [
+                {
+                  "name": "object"
+                },
+                {
+                  "name": "array"
+                }
+              ],
+              "description": "Item for compound nodes",
+              "required": false
+            },
+            "siblingsData": {
+              "name": "union",
+              "value": [
+                {
+                  "name": "object"
+                },
+                {
+                  "name": "array"
+                }
+              ],
+              "description": "Item for compound nodes",
+              "required": false
+            },
+            "isParent": {
+              "name": "bool",
+              "description": "Item for compound nodes",
+              "required": false
+            },
+            "isChildless": {
+              "name": "bool",
+              "description": "Item for compound nodes",
+              "required": false
+            },
+            "isChild": {
+              "name": "bool",
+              "description": "Item for compound nodes",
+              "required": false
+            },
+            "isOrphan": {
+              "name": "bool",
+              "description": "Item for compound nodes",
+              "required": false
+            },
+            "relativePosition": {
+              "name": "object",
+              "description": "Item for compound nodes",
+              "required": false
+            }
+          }
+        },
+        "required": false,
+        "description": "The complete node dictionary returned when you double tap or double click on it. Read-only."
+      },
+      "dblTapNodeData": {
+        "type": {
+          "name": "object"
+        },
+        "required": false,
+        "description": "The data dictionary of a node returned when you double tap or double click it. Read-only."
+      },
+      "dblTapEdge": {
+        "type": {
+          "name": "exact",
+          "value": {
+            "isLoop": {
+              "name": "bool",
+              "description": "Edge-specific item",
+              "required": false
+            },
+            "isSimple": {
+              "name": "bool",
+              "description": "Edge-specific item",
+              "required": false
+            },
+            "midpoint": {
+              "name": "object",
+              "description": "Edge-specific item",
+              "required": false
+            },
+            "sourceData": {
+              "name": "object",
+              "description": "Edge-specific item",
+              "required": false
+            },
+            "sourceEndpoint": {
+              "name": "object",
+              "description": "Edge-specific item",
+              "required": false
+            },
+            "targetData": {
+              "name": "object",
+              "description": "Edge-specific item",
+              "required": false
+            },
+            "targetEndpoint": {
+              "name": "object",
+              "description": "Edge-specific item",
+              "required": false
+            },
+            "timeStamp": {
+              "name": "number",
+              "description": "Edge-specific item",
+              "required": false
+            },
+            "classes": {
+              "name": "string",
+              "description": "General item (for all elements)",
+              "required": false
+            },
+            "data": {
+              "name": "object",
+              "description": "General item (for all elements)",
+              "required": false
+            },
+            "grabbable": {
+              "name": "bool",
+              "description": "General item (for all elements)",
+              "required": false
+            },
+            "group": {
+              "name": "string",
+              "description": "General item (for all elements)",
+              "required": false
+            },
+            "locked": {
+              "name": "bool",
+              "description": "General item (for all elements)",
+              "required": false
+            },
+            "selectable": {
+              "name": "bool",
+              "description": "General item (for all elements)",
+              "required": false
+            },
+            "selected": {
+              "name": "bool",
+              "description": "General item (for all elements)",
+              "required": false
+            },
+            "style": {
+              "name": "object",
+              "description": "General item (for all elements)",
+              "required": false
+            }
+          }
+        },
+        "required": false,
+        "description": "The complete edge dictionary returned when you double tap or double click it. Read-only."
+      },
+      "dblTapEdgeData": {
+        "type": {
+          "name": "object"
+        },
+        "required": false,
+        "description": "The data dictionary of an edge returned when you double tap or double click it. Read-only."
+      },
+      "dblTapData": {
+        "type": {
+          "name": "object"
+        },
+        "required": false,
+        "description": "The data with position of tap when double tapped on background. Read-only."
+      },
+      "ehcompleteSource": {
+        "type": {
+          "name": "object"
+        },
+        "required": false,
+        "description": "Information and data about source of newly created edge by edgehandlers"
+      },
+      "ehcompleteTarget": {
+        "type": {
+          "name": "object"
+        },
+        "required": false,
+        "description": "Information and data about source of newly created edge by edgehandlers"
+      },
+      "ele_move_pos": {
+        "type": {
+          "name": "object"
+        },
+        "required": false,
+        "description": "Information about position of moved node in canvas"
+      },
+      "ele_move_data": {
+        "type": {
+          "name": "object"
+        },
+        "required": false,
+        "description": "Data about moved node in canvas"
+      },
       "mouseoverNodeData": {
         "type": {
           "name": "object"
@@ -785,14 +1089,14 @@
           "name": "array"
         },
         "required": false,
-        "description": "The list of data dictionaries of all selected nodes (e.g. using\nShift+Click to select multiple nodes, or Shift+Drag to use box selection). Read-only."
+        "description": "The list of data dictionaries of all selected nodes (e.g. using\r\nShift+Click to select multiple nodes, or Shift+Drag to use box selection). Read-only."
       },
       "selectedEdgeData": {
         "type": {
           "name": "array"
         },
         "required": false,
-        "description": "The list of data dictionaries of all selected edges (e.g. using\nShift+Click to select multiple nodes, or Shift+Drag to use box selection). Read-only."
+        "description": "The list of data dictionaries of all selected edges (e.g. using\r\nShift+Click to select multiple nodes, or Shift+Drag to use box selection). Read-only."
       },
       "generateImage": {
         "type": {
@@ -823,7 +1127,7 @@
             },
             "options": {
               "name": "object",
-              "description": "Dictionary of options to cy.png() / cy.jpg() or cy.svg() for image generation.\nSee https://js.cytoscape.org/#core/export for details. For `'output'`, only 'base64'\nand 'base64uri' are supported. Default: `{'output': 'base64uri'}`.",
+              "description": "Dictionary of options to cy.png() / cy.jpg() or cy.svg() for image generation.\r\nSee https://js.cytoscape.org/#core/export for details. For `'output'`, only 'base64'\r\nand 'base64uri' are supported. Default: `{'output': 'base64uri'}`.",
               "required": false
             },
             "action": {
@@ -842,7 +1146,7 @@
                   "computed": false
                 }
               ],
-              "description": "`'store'`: Stores the image data (only jpg and png are supported)\nin `imageData` and invokes server-side Dash callbacks. `'download'`: Downloads the image\nas a file with all data handling done client-side. No `imageData` callbacks are fired.\n`'both'`: Stores image data and downloads image as file. The default is `'store'`",
+              "description": "`'store'`: Stores the image data (only jpg and png are supported)\r\nin `imageData` and invokes server-side Dash callbacks. `'download'`: Downloads the image\r\nas a file with all data handling done client-side. No `imageData` callbacks are fired.\r\n`'both'`: Stores image data and downloads image as file. The default is `'store'`",
               "required": false
             },
             "filename": {
@@ -853,7 +1157,7 @@
           }
         },
         "required": false,
-        "description": "Dictionary specifying options to generate an image of the current cytoscape graph.\nValue is cleared after data is received and image is generated. This property will\nbe ignored on the initial creation of the cytoscape object and must be invoked through\na callback after it has been rendered.\n\nIf the app does not need the image data server side and/or it will only be used to download\nthe image, it may be prudent to invoke `'download'` for `action` instead of\n`'store'` to improve performance by preventing transfer of data to the server.",
+        "description": "Dictionary specifying options to generate an image of the current cytoscape graph.\r\nValue is cleared after data is received and image is generated. This property will\r\nbe ignored on the initial creation of the cytoscape object and must be invoked through\r\na callback after it has been rendered.\r\n\r\nIf the app does not need the image data server side and/or it will only be used to download\r\nthe image, it may be prudent to invoke `'download'` for `action` instead of\r\n`'store'` to improve performance by preventing transfer of data to the server.",
         "defaultValue": {
           "value": "{}",
           "computed": false
@@ -864,7 +1168,7 @@
           "name": "string"
         },
         "required": false,
-        "description": "String representation of the image requested with generateImage. Null if no\nimage was requested yet or the previous request failed. Read-only.",
+        "description": "String representation of the image requested with generateImage. Null if no\r\nimage was requested yet or the previous request failed. Read-only.",
         "defaultValue": {
           "value": "null",
           "computed": false

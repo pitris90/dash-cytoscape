@@ -2,7 +2,7 @@
  * JavaScript Requirements: cytoscape, cytoscape-svg
  * React.js requirements: react-cytoscapejs
  */
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import CytoscapeComponent from 'react-cytoscapejs';
 import _ from 'lodash';
@@ -21,6 +21,7 @@ class Cytoscape extends Component {
         this._handleCyCalled = false;
         this.handleImageGeneration = this.handleImageGeneration.bind(this);
         this.cyResponsiveClass = false;
+        this.eh = null;
     }
 
     generateNode(event) {
@@ -37,8 +38,8 @@ class Cytoscape extends Component {
 
         // Trim down the element objects to only the data contained
         const edgesData = ele.connectedEdges().map(ele => {
-                return ele.data();
-            }),
+            return ele.data();
+        }),
             childrenData = ele.children().map(ele => {
                 return ele.data();
             }),
@@ -52,7 +53,7 @@ class Cytoscape extends Component {
                 return ele.data();
             });
 
-        const {timeStamp} = event;
+        const { timeStamp } = event;
         const {
             classes,
             data,
@@ -114,7 +115,7 @@ class Cytoscape extends Component {
             targetData = ele.target().data(),
             targetEndpoint = ele.targetEndpoint();
 
-        const {timeStamp} = event;
+        const { timeStamp } = event;
         const {
             classes,
             data,
@@ -161,7 +162,8 @@ class Cytoscape extends Component {
         this._handleCyCalled = true;
 
         // ///////////////////////////////////// CONSTANTS /////////////////////////////////////////
-        const SELECT_THRESHOLD = 100;
+        const SELECT_THRESHOLD = 255;
+        const POSITION_THRESHOLD = 100;
 
         const selectedNodes = cy.collection();
         const selectedEdges = cy.collection();
@@ -171,7 +173,7 @@ class Cytoscape extends Component {
             /**
              * Refresh Layout if needed
              */
-            const {autoRefreshLayout, layout} = this.props;
+            const { autoRefreshLayout, layout } = this.props;
 
             if (autoRefreshLayout) {
                 cy.layout(layout).run();
@@ -206,9 +208,29 @@ class Cytoscape extends Component {
             }
         }, SELECT_THRESHOLD);
 
+        const refreshPositions = _.debounce(event => {
+            /**
+             * Refresh Positions if needed
+             */
+            const ele = event.target;
+            const ele_move_node_data = ele.data();
+            // make copy so it propagates to input every time its content is modified
+            const ele_move_position = JSON.parse(JSON.stringify(ele.position())); 
+
+            if (typeof this.props.setProps === 'function') {
+                this.props.setProps({
+                    ele_move_pos: ele_move_position,
+                    ele_move_data: ele_move_node_data
+                });
+            }
+        }, POSITION_THRESHOLD);
+
         // /////////////////////////////////////// EVENTS //////////////////////////////////////////
-        cy.on('tap', 'node', event => {
+        cy.on('onetap', 'node', event => {
             const nodeObject = this.generateNode(event);
+            // if (!event.shiftKey) {
+            //     cy.trigger("focus");
+            // }
 
             if (typeof this.props.setProps === 'function') {
                 this.props.setProps({
@@ -216,10 +238,12 @@ class Cytoscape extends Component {
                     tapNodeData: nodeObject.data
                 });
             }
+            document.getElementById("app-window").focus();
         });
 
-        cy.on('tap', 'edge', event => {
+        cy.on('onetap', 'edge', event => {
             const edgeObject = this.generateEdge(event);
+            document.getElementById("app-window").focus();
 
             if (typeof this.props.setProps === 'function') {
                 this.props.setProps({
@@ -227,6 +251,66 @@ class Cytoscape extends Component {
                     tapEdgeData: edgeObject.data
                 });
             }
+        });
+
+        cy.on('onetap', event => {
+            // target holds a reference to the originator
+            // of the event (core or element)
+            document.getElementById("app-window").focus();
+            var evtTarget = event.target;
+            const position = event.position;
+            console.log("Just tap");
+
+            if (evtTarget === cy && typeof this.props.setProps === 'function') {
+                console.log("Clicked on position: " + position);
+                this.props.setProps({
+                    tapData: position
+                });
+            }
+        });
+
+        cy.on('dbltap', 'node', event => {
+            const nodeObject = this.generateNode(event);
+
+            if (typeof this.props.setProps === 'function') {
+                this.props.setProps({
+                    dblTapNode: nodeObject,
+                    dblTapNodeData: nodeObject.data
+                });
+            }
+            document.getElementById("app-window").focus();
+        });
+
+        cy.on('dbltap', 'edge', event => {
+            const edgeObject = this.generateEdge(event);
+            document.getElementById("app-window").focus();
+
+            if (typeof this.props.setProps === 'function') {
+                this.props.setProps({
+                    dblTapEdge: edgeObject,
+                    dblTapEdgeData: edgeObject.data
+                });
+            }
+        });
+
+        cy.on('dbltap', event => {
+            // target holds a reference to the originator
+            // of the event (core or element)
+            document.getElementById("app-window").focus();
+            var evtTarget = event.target;
+            const position = event.position;
+            console.log("Just double tap");
+
+            if (evtTarget === cy && typeof this.props.setProps === 'function') {
+                console.log("Double Clicked on position: " + position);
+                this.props.setProps({
+                    dblTapData: position
+                });
+            }
+        });
+
+        cy.on('position', event => {
+            refreshPositions(event);
         });
 
         cy.on('mouseover', 'node', event => {
@@ -275,6 +359,89 @@ class Cytoscape extends Component {
 
         cy.on('add remove', () => {
             refreshLayout();
+        });
+
+        // the default values of each option are outlined below:
+        let defaults = {
+            canConnect: function (sourceNode, targetNode) {
+                // whether an edge can be created between source and target
+                return !sourceNode.same(targetNode); // && !sourceNode.allAreNeighbors(targetNode); // e.g. disallow loops
+            },
+            edgeParams: function (sourceNode, targetNode) {
+                // for edges between the specified source and target
+                // return element object to be passed to cy.add() for edge
+                return {};
+            },
+            hoverDelay: 150, // time spent hovering over a target node before it is considered selected
+            snap: true, // when enabled, the edge can be drawn by just moving close to a target node (can be confusing on compound graphs)
+            snapThreshold: 50, // the target node must be less than or equal to this many pixels away from the cursor/finger
+            snapFrequency: 15, // the number of times per second (Hz) that snap checks done (lower is less expensive)
+            noEdgeEventsInDraw: true, // set events:no to edges during draws, prevents mouseouts on compounds
+            disableBrowserGestures: true // during an edge drawing gesture, disable browser gestures such as two-finger trackpad swipe and pinch-to-zoom
+        };
+
+        this.eh = cy.edgehandles(defaults);
+
+        if (document.getElementById("app-window")) {
+            document.getElementById("app-window").addEventListener('keydown', event => {
+                console.log("Keydown event");
+                if (event.shiftKey) {
+                    console.log("Shift pressed down");
+                    cy.autoungrabify(true);
+                    this.eh.enableDrawMode();
+                }
+            });
+
+            document.getElementById("app-window").addEventListener('keyup', () => {
+                console.log("Keyup event");
+                console.log("Shift or some key released");
+                this.eh.disableDrawMode();
+                cy.autoungrabify(false);
+            });
+
+            document.getElementById("app-window").addEventListener('mousedown', event => {
+                if (event.shiftKey) {
+                    console.log("Shift key div focus");
+                    document.getElementById("app-window").focus();
+                }
+            })
+        }
+
+        // this.eh.start();
+        // console.log("enabling draw mode");
+        // this.eh.enableDrawMode();
+
+        cy.on('ehcomplete', (event, sourceNode, targetNode, addedEdge) => {
+            const source = sourceNode.data();
+            const target = targetNode.data();
+            console.log("Created new edge");
+            var evtTarget = event.target;
+
+            if (evtTarget === cy && typeof this.props.setProps === 'function') {
+                console.log("Setting ehcomplete prop");
+                // console.log("source node: " + source);
+                // console.log("target node: " + target);
+                this.props.setProps({
+                    ehcompleteSource: source,
+                    ehcompleteTarget: target,
+                });
+                cy.remove(addedEdge);
+            }
+        });
+
+        cy.on('ehstart', (event, sourceNode) => {
+            console.log("Started edge creation, nulling start and target nodes");
+            var evtTarget = event.target;
+
+            if (evtTarget === cy && typeof this.props.setProps === 'function') {
+                console.log("Nulling source and target nodes");
+                // console.log("source node: " + source);
+                // console.log("target node: " + target);
+                this.props.setProps({
+                    ehcompleteSource: null,
+                    ehcompleteTarget: null,
+                });
+            }
         });
 
         this.cyResponsiveClass = new CyResponsive(cy);
@@ -374,7 +541,7 @@ class Cytoscape extends Component {
                 if (desiredOutput === 'base64') {
                     callbackData = callbackData.replace(/^data:.+;base64,/, '');
                 }
-                this.props.setProps({imageData: callbackData});
+                this.props.setProps({ imageData: callbackData });
             };
             reader.readAsDataURL(output);
         }
@@ -436,7 +603,7 @@ class Cytoscape extends Component {
         if (Object.keys(generateImage).length > 0) {
             // If no cytoscape object has been created yet, an image cannot be generated,
             // so generateImage will be ignored and cleared.
-            this.props.setProps({generateImage: {}});
+            this.props.setProps({ generateImage: {} });
             if (this._cy) {
                 this.handleImageGeneration(
                     generateImage.type,
@@ -843,6 +1010,135 @@ Cytoscape.propTypes = {
     tapEdgeData: PropTypes.object,
 
     /**
+     * The data with position of tap when tapped on background. Read-only.
+     */
+    tapData: PropTypes.object,
+
+    /**
+     * The complete node dictionary returned when you double tap or double click on it. Read-only.
+     */
+    dblTapNode: PropTypes.exact({
+        /** node specific item */
+        edgesData: PropTypes.array,
+        /** node specific item */
+        renderedPosition: PropTypes.object,
+        /** node specific item */
+        timeStamp: PropTypes.number,
+        /** General item (for all elements) */
+        classes: PropTypes.string,
+        /** General item (for all elements) */
+        data: PropTypes.object,
+        /** General item (for all elements) */
+        grabbable: PropTypes.bool,
+        /** General item (for all elements) */
+        group: PropTypes.string,
+        /** General item (for all elements) */
+        locked: PropTypes.bool,
+        /** General item (for all elements) */
+        position: PropTypes.object,
+        /** General item (for all elements) */
+        selectable: PropTypes.bool,
+        /** General item (for all elements) */
+        selected: PropTypes.bool,
+        /** General item (for all elements) */
+        style: PropTypes.object,
+        /** Item for compound nodes */
+        ancestorsData: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+        /** Item for compound nodes */
+        childrenData: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+        /** Item for compound nodes */
+        descendantsData: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+        /** Item for compound nodes */
+        parentData: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+        /** Item for compound nodes */
+        siblingsData: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+        /** Item for compound nodes */
+        isParent: PropTypes.bool,
+        /** Item for compound nodes */
+        isChildless: PropTypes.bool,
+        /** Item for compound nodes */
+        isChild: PropTypes.bool,
+        /** Item for compound nodes */
+        isOrphan: PropTypes.bool,
+        /** Item for compound nodes */
+        relativePosition: PropTypes.object
+    }),
+
+    /**
+     * The data dictionary of a node returned when you double tap or double click it. Read-only.
+     */
+    dblTapNodeData: PropTypes.object,
+
+    /**
+     * The complete edge dictionary returned when you double tap or double click it. Read-only.
+     */
+    dblTapEdge: PropTypes.exact({
+        /** Edge-specific item */
+        isLoop: PropTypes.bool,
+        /** Edge-specific item */
+        isSimple: PropTypes.bool,
+        /** Edge-specific item */
+        midpoint: PropTypes.object,
+        /** Edge-specific item */
+        sourceData: PropTypes.object,
+        /** Edge-specific item */
+        sourceEndpoint: PropTypes.object,
+        /** Edge-specific item */
+        targetData: PropTypes.object,
+        /** Edge-specific item */
+        targetEndpoint: PropTypes.object,
+        /** Edge-specific item */
+        timeStamp: PropTypes.number,
+        /** General item (for all elements) */
+        classes: PropTypes.string,
+        /** General item (for all elements) */
+        data: PropTypes.object,
+        /** General item (for all elements) */
+        grabbable: PropTypes.bool,
+        /** General item (for all elements) */
+        group: PropTypes.string,
+        /** General item (for all elements) */
+        locked: PropTypes.bool,
+        /** General item (for all elements) */
+        selectable: PropTypes.bool,
+        /** General item (for all elements) */
+        selected: PropTypes.bool,
+        /** General item (for all elements) */
+        style: PropTypes.object
+    }),
+
+    /**
+     * The data dictionary of an edge returned when you double tap or double click it. Read-only.
+     */
+    dblTapEdgeData: PropTypes.object,
+
+    /**
+     * The data with position of tap when double tapped on background. Read-only.
+     */
+    dblTapData: PropTypes.object,
+
+    /**
+    * Information and data about source of newly created edge by edgehandlers
+    */
+    ehcompleteSource: PropTypes.object,
+
+    /**
+     * Information and data about source of newly created edge by edgehandlers
+     */
+    ehcompleteTarget: PropTypes.object,
+
+
+    /**
+     * Information about position of moved node in canvas
+     */
+    ele_move_pos: PropTypes.object,
+
+    /**
+     * Data about moved node in canvas
+     */
+    ele_move_data: PropTypes.object,
+
+    /**
      * The data dictionary of a node returned when you hover over it. Read-only.
      */
     mouseoverNodeData: PropTypes.object,
@@ -905,9 +1201,9 @@ Cytoscape.propTypes = {
 };
 
 Cytoscape.defaultProps = {
-    style: {width: '600px', height: '600px'},
-    layout: {name: 'grid'},
-    pan: {x: 0, y: 0},
+    style: { width: '600px', height: '600px' },
+    layout: { name: 'grid' },
+    pan: { x: 0, y: 0 },
     zoom: 1,
     minZoom: 1e-50,
     maxZoom: 1e50,

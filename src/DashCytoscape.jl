@@ -3,9 +3,9 @@ module DashCytoscape
 using Dash
 
 const resources_path = realpath(joinpath( @__DIR__, "..", "deps"))
-const version = "0.3.0"
+const version = "0.3.1"
 
-include("jl/cyto_cytoscape.jl")
+include("jl/'cyto'_cytoscape.jl")
 
 function __init__()
     DashBase.register_package(
@@ -16,7 +16,7 @@ function __init__()
             [
                 DashBase.Resource(
     relative_package_path = "dash_cytoscape.min.js",
-    external_url = "https://unpkg.com/dash-cytoscape@0.3.0/dash_cytoscape/dash_cytoscape.min.js",
+    external_url = "https://unpkg.com/dash-cytoscape@0.3.1/dash_cytoscape/dash_cytoscape.min.js",
     dynamic = nothing,
     async = nothing,
     type = :js
