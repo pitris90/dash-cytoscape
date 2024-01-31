@@ -390,11 +390,35 @@ class Cytoscape extends Component {
                     cy.autoungrabify(true);
                     this.eh.enableDrawMode();
                 }
+                if (event.ctrlKey && event.key === 'z' && typeof this.props.setProps === 'function') {
+                    console.log("Ctrl + Z clicked");
+                    this.props.setProps({
+                        undoClick: this.props.undoClick + 1,
+                    });
+                }
+                if (event.ctrlKey && event.key === 'y' && typeof this.props.setProps === 'function') {
+                    console.log("Ctrl + Y clicked");
+                    this.props.setProps({
+                        redoClick: this.props.redoClick + 1,
+                    });
+                }
             });
 
-            document.getElementById("app-window").addEventListener('keyup', () => {
-                console.log("Keyup event");
-                console.log("Shift or some key released");
+            document.getElementById("app-window").addEventListener('keyup', event => {
+                //console.log("Keyup event");
+                if (event.ctrlKey && event.key === 'z' && typeof this.props.setProps === 'function') {
+                    console.log("Ctrl + Z unclicked");
+                    this.props.setProps({
+                        undoClick: 0,
+                    });
+                }
+                if (event.ctrlKey && event.key === 'y' && typeof this.props.setProps === 'function') {
+                    console.log("Ctrl + Y unclicked");
+                    this.props.setProps({
+                        redoClick: 0,
+                    });
+                }
+                //console.log("Shift or some key released");
                 this.eh.disableDrawMode();
                 cy.autoungrabify(false);
             });
@@ -1118,6 +1142,18 @@ Cytoscape.propTypes = {
     dblTapData: PropTypes.object,
 
     /**
+     * Number which indicates if key(s) (CTRL + Z) for Undo are pressed
+     * 1+ clicked, 0 unclicked
+     */
+    undoClick: PropTypes.number,
+
+    /**
+     * Number which indicates if key(s) (CTRL + Y) for Redo are pressed
+     * 1+ clicked, 0 unclicked
+     */
+    redoClick: PropTypes.number,
+
+    /**
     * Information and data about source of newly created edge by edgehandlers
     */
     ehcompleteSource: PropTypes.object,
@@ -1219,7 +1255,9 @@ Cytoscape.defaultProps = {
     generateImage: {},
     imageData: null,
     responsive: false,
-    elements: []
+    elements: [],
+    undoClick: 0,
+    redoClick: 0
 };
 
 export default Cytoscape;
